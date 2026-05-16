@@ -219,9 +219,6 @@ export default function App() {
   const [propertyMaintenancePct, setPropertyMaintenancePct] = useState(0.01); // 1 % ročně z hodnoty
   const [propertyTaxYearly, setPropertyTaxYearly] = useState(3000);
 
-  // zobrazení reálných hodnot
-  const [showReal, setShowReal] = useState(false);
-
   const result = useMemo(() => simulate({
     years,
     initialCapital, inflation,
@@ -236,16 +233,12 @@ export default function App() {
 
   const chartData = result.yearly.map((d) => ({
     year: d.year,
-    "Akcie": showReal ? d.stockReal : d.stock,
-    "Byt (vlastní jmění)": showReal ? d.aptEquityReal : d.aptEquity,
+    "Akcie": d.stockReal,
+    "Byt (vlastní jmění)": d.aptEquityReal,
   }));
 
-  const finalStock = showReal
-    ? result.yearly[result.yearly.length - 1].stockReal
-    : result.finalStock;
-  const finalApt = showReal
-    ? result.yearly[result.yearly.length - 1].aptEquityReal
-    : result.finalAptEquity;
+  const finalStock = result.yearly[result.yearly.length - 1].stockReal;
+  const finalApt = result.yearly[result.yearly.length - 1].aptEquityReal;
 
   const winner = finalStock > finalApt ? "akcie" : "byt";
   const diff = Math.abs(finalStock - finalApt);
@@ -303,25 +296,11 @@ export default function App() {
 
       <div style={{ maxWidth: 1200, margin: "0 auto" }}>
 
-        {/* horizont + reálné hodnoty */}
+        {/* horizont */}
         <Card style={{ marginBottom: 24 }}>
-          <div style={{ display: "grid", gridTemplateColumns: "2fr 1fr", gap: 24, alignItems: "center" }}>
-            <Slider label={`Investiční horizont`} value={years} min={1} max={30} step={1}
-              onChange={setYears} fmtFn={(v) => `${v} ${v === 1 ? "rok" : v < 5 ? "roky" : "let"}`}
-              color="#a78bfa" hint="Nastav, kolik let chceš modelovat." />
-            <label style={{
-              display: "flex", alignItems: "center", gap: 10,
-              cursor: "pointer", fontFamily: "'DM Mono', monospace", fontSize: 13,
-              padding: "10px 14px",
-              background: showReal ? "rgba(167,139,250,0.15)" : "rgba(255,255,255,0.03)",
-              border: `1px solid ${showReal ? "rgba(167,139,250,0.4)" : "rgba(255,255,255,0.08)"}`,
-              borderRadius: 12,
-            }}>
-              <input type="checkbox" checked={showReal} onChange={(e) => setShowReal(e.target.checked)}
-                style={{ accentColor: "#a78bfa" }} />
-              <span>Zobrazit reálné hodnoty (po odečtení inflace {pct(inflation)})</span>
-            </label>
-          </div>
+          <Slider label={`Investiční horizont`} value={years} min={1} max={30} step={1}
+            onChange={setYears} fmtFn={(v) => `${v} ${v === 1 ? "rok" : v < 5 ? "roky" : "let"}`}
+            color="#a78bfa" hint={`Všechny hodnoty jsou reálné — po odečtení inflace ${pct(inflation)} ročně (dnešní kupní síla).`} />
         </Card>
 
         {/* winner banner */}
@@ -450,7 +429,7 @@ export default function App() {
         {/* hlavní graf */}
         <Card style={{ marginBottom: 24 }}>
           <div style={{ fontFamily: "'Syne', sans-serif", fontWeight: 700, fontSize: 18, marginBottom: 20 }}>
-            Vývoj vlastního jmění {showReal && <span style={{ color: "#a78bfa", fontSize: 14 }}>(reálné hodnoty)</span>}
+            Vývoj vlastního jmění <span style={{ color: "#a78bfa", fontSize: 14, fontWeight: 500 }}>(reálné hodnoty, dnešní Kč)</span>
           </div>
           <ResponsiveContainer width="100%" height={360}>
             <LineChart data={chartData}>
