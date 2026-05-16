@@ -162,17 +162,17 @@ function simulate({
 const Slider = ({ label, value, min, max, step, onChange, fmtFn, color, hint }) => (
   <div style={{ marginBottom: 18 }}>
     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-      <span style={{ color: "#5a5a5a", fontSize: 13, fontFamily: "'IBM Plex Mono', monospace" }}>{label}</span>
-      <span style={{ color: color || "#0f1419", fontSize: 13, fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>
+      <span style={{ color: "#8b8d96", fontSize: 13, fontFamily: "'IBM Plex Mono', monospace" }}>{label}</span>
+      <span style={{ color: color || "#e8e8ea", fontSize: 13, fontWeight: 700, fontFamily: "'IBM Plex Mono', monospace" }}>
         {fmtFn ? fmtFn(value) : value}
       </span>
     </div>
     <input
       type="range" min={min} max={max} step={step} value={value}
       onChange={(e) => onChange(Number(e.target.value))}
-      style={{ width: "100%", accentColor: color || "#0c4a6e", cursor: "pointer" }}
+      style={{ width: "100%", accentColor: color || "#10b981", cursor: "pointer" }}
     />
-    {hint && <div style={{ fontSize: 11, color: "#8a8a8a", marginTop: 4 }}>{hint}</div>}
+    {hint && <div style={{ fontSize: 11, color: "#6b6e76", marginTop: 4 }}>{hint}</div>}
   </div>
 );
 
@@ -180,12 +180,12 @@ const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
     <div style={{
-      background: "#ffffff",
-      border: "1px solid #c4ccd6",
+      background: "#181b22",
+      border: "1px solid #3a3f4a",
       borderRadius: 4,
       padding: "12px 18px",
       fontFamily: "'IBM Plex Mono', monospace",
-      boxShadow: "0 4px 12px rgba(15,20,25,0.08)",
+      boxShadow: "0 4px 12px rgba(0,0,0,0.5)",
     }}>
       <p style={{ color: "#6b6b6b", marginBottom: 8, fontSize: 12 }}>Rok {label}</p>
       {payload.map((p) => (
@@ -199,12 +199,12 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const Card = ({ children, accent, style }) => (
   <div style={{
-    background: "#ffffff",
-    border: "1px solid #dde3eb",
-    borderTop: accent ? `3px solid ${accent}` : "1px solid #dde3eb",
+    background: "#181b22",
+    border: "1px solid #2a2f3a",
+    borderTop: accent ? `3px solid ${accent}` : "1px solid #2a2f3a",
     borderRadius: 4,
     padding: 24,
-    boxShadow: "0 1px 2px rgba(15,20,25,0.04)",
+    boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
     ...style,
   }}>{children}</div>
 );
@@ -270,9 +270,9 @@ export default function App() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "#f5f7fa",
+      background: "#0e1015",
       fontFamily: "'Inter', sans-serif",
-      color: "#0f1419",
+      color: "#e8e8ea",
       padding: "32px 20px",
     }}>
       <style>{`
@@ -286,14 +286,14 @@ export default function App() {
         <div style={{
           display: "inline-block",
           background: "transparent",
-          border: "1px solid #c4ccd6",
+          border: "1px solid #3a3f4a",
           borderRadius: 2,
           padding: "4px 14px",
           fontSize: 11,
           fontFamily: "'IBM Plex Mono', monospace",
           letterSpacing: 2,
           marginBottom: 16,
-          color: "#0c4a6e",
+          color: "#10b981",
           fontWeight: 500,
         }}>30 LET · ČESKÝ TRH</div>
         <h1 style={{
@@ -301,7 +301,7 @@ export default function App() {
           fontSize: "clamp(32px, 5vw, 56px)",
           fontWeight: 700,
           margin: 0,
-          color: "#0f1419",
+          color: "#e8e8ea",
           lineHeight: 1.05,
           letterSpacing: "-0.02em",
         }}>Akcie vs. vlastní byt</h1>
@@ -316,30 +316,30 @@ export default function App() {
         <Card style={{ marginBottom: 24 }}>
           <Slider label={`Investiční horizont`} value={years} min={1} max={30} step={1}
             onChange={setYears} fmtFn={(v) => `${v} ${v === 1 ? "rok" : v < 5 ? "roky" : "let"}`}
-            color="#4c3a8a" hint={`Všechny hodnoty jsou reálné — po odečtení inflace ${pct(inflation)} ročně (dnešní kupní síla).`} />
+            color="#a78bfa" hint={`Všechny hodnoty jsou reálné — po odečtení inflace ${pct(inflation)} ročně (dnešní kupní síla).`} />
         </Card>
 
         {/* winner banner */}
         <div style={{
-          background: winner === "akcie" ? "#f0f4f8" : "#fdf5ea",
-          borderLeft: `4px solid ${winner === "akcie" ? "#0c4a6e" : "#92591e"}`,
-          border: "1px solid #dde3eb",
+          background: winner === "akcie" ? "rgba(16,185,129,0.08)" : "rgba(245,158,11,0.08)",
+          borderLeft: `4px solid ${winner === "akcie" ? "#10b981" : "#f59e0b"}`,
+          border: "1px solid #2a2f3a",
           borderLeftWidth: 4,
-          borderLeftColor: winner === "akcie" ? "#0c4a6e" : "#92591e",
+          borderLeftColor: winner === "akcie" ? "#10b981" : "#f59e0b",
           borderRadius: 4,
           padding: "20px 28px",
           marginBottom: 24,
         }}>
           <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 20 }}>
             Po {years} {years === 1 ? "roce" : years < 5 ? "letech" : "letech"} vede:{" "}
-            <span style={{ color: winner === "akcie" ? "#0c4a6e" : "#92591e" }}>
+            <span style={{ color: winner === "akcie" ? "#10b981" : "#f59e0b" }}>
               {winner === "akcie" ? "Investice do akcií" : "Vlastní byt"}
             </span>
           </div>
-          <div style={{ color: "#5a5a5a", fontSize: 14, marginTop: 6 }}>
-            Rozdíl ve vlastním jmění: <strong style={{ color: "#0f1419" }}>{fmt(diff)}</strong>
-            {" · "}Měsíční výdaj akcie: <strong style={{ color: "#0c4a6e" }}>{fmt(monthlyStocks)}</strong>
-            {" · "}Měsíční výdaj byt (vč. údržby): <strong style={{ color: "#92591e" }}>{fmt(monthlyApt)}</strong>
+          <div style={{ color: "#8b8d96", fontSize: 14, marginTop: 6 }}>
+            Rozdíl ve vlastním jmění: <strong style={{ color: "#e8e8ea" }}>{fmt(diff)}</strong>
+            {" · "}Měsíční výdaj akcie: <strong style={{ color: "#10b981" }}>{fmt(monthlyStocks)}</strong>
+            {" · "}Měsíční výdaj byt (vč. údržby): <strong style={{ color: "#f59e0b" }}>{fmt(monthlyApt)}</strong>
           </div>
         </div>
 
@@ -347,98 +347,98 @@ export default function App() {
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 20, marginBottom: 24 }}>
 
           {/* akcie */}
-          <Card accent="#0c4a6e">
+          <Card accent="#10b981">
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
               <span style={{ fontSize: 22 }}>📈</span>
               <div>
-                <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 16, color: "#0c4a6e" }}>
+                <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 16, color: "#10b981" }}>
                   Scénář 1: Pronájem + akcie
                 </div>
-                <div style={{ fontSize: 12, color: "#8a8a8a" }}>Bydlíš v nájmu, investuješ úspory</div>
+                <div style={{ fontSize: 12, color: "#6b6e76" }}>Bydlíš v nájmu, investuješ úspory</div>
               </div>
             </div>
 
             <Slider label="Počáteční kapitál (vklad do akcií)" value={initialCapital} min={0} max={5_000_000} step={50_000}
-              onChange={setInitialCapital} fmtFn={fmt} color="#0c4a6e" />
+              onChange={setInitialCapital} fmtFn={fmt} color="#10b981" />
             <Slider label="Měsíční příspěvek do akcií" value={monthlyAdd} min={0} max={150_000} step={1_000}
-              onChange={setMonthlyAdd} fmtFn={fmt} color="#0c4a6e"
+              onChange={setMonthlyAdd} fmtFn={fmt} color="#10b981"
               hint="Příspěvek se každý rok navyšuje o inflaci." />
             <Slider label="Měsíční nájem (start)" value={rentMonthly} min={5_000} max={80_000} step={500}
-              onChange={setRentMonthly} fmtFn={fmt} color="#a8203b" />
+              onChange={setRentMonthly} fmtFn={fmt} color="#fb7185" />
             <Slider label="Růst nájmu / rok" value={rentGrowth} min={0} max={0.08} step={0.005}
-              onChange={setRentGrowth} fmtFn={pct} color="#a8203b"
+              onChange={setRentGrowth} fmtFn={pct} color="#fb7185"
               hint="Praha posledních 10 let cca 4 %." />
             <Slider label="Roční nominální výnos akcií" value={stockReturn} min={0.02} max={0.12} step={0.005}
-              onChange={setStockReturn} fmtFn={pct} color="#086d3e"
+              onChange={setStockReturn} fmtFn={pct} color="#5eead4"
               hint="MSCI World dlouhodobě 7–8 % v CZK." />
 
             <div style={{
               marginTop: 14, padding: "12px 16px",
-              background: "#f0f4f8", borderRadius: 12,
+              background: "rgba(16,185,129,0.08)", borderRadius: 12,
               fontFamily: "'IBM Plex Mono', monospace", fontSize: 13,
             }}>
               <Row label="Celkový měsíční výdaj (start)" value={fmt(monthlyStocks)} />
-              <Row label={`Portfolio za ${years} let`} value={fmt(finalStock)} valueColor="#0c4a6e" />
-              <Row label="Celkem zaplacený nájem" value={fmt(result.totalRentPaid)} valueColor="#a8203b" />
+              <Row label={`Portfolio za ${years} let`} value={fmt(finalStock)} valueColor="#10b981" />
+              <Row label="Celkem zaplacený nájem" value={fmt(result.totalRentPaid)} valueColor="#fb7185" />
             </div>
           </Card>
 
           {/* byt */}
-          <Card accent="#92591e">
+          <Card accent="#f59e0b">
             <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
               <span style={{ fontSize: 22 }}>🏠</span>
               <div>
-                <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 16, color: "#92591e" }}>
+                <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 16, color: "#f59e0b" }}>
                   Scénář 2: Vlastní byt na hypotéku
                 </div>
-                <div style={{ fontSize: 12, color: "#8a8a8a" }}>Splácíš hypotéku, byt roste na hodnotě</div>
+                <div style={{ fontSize: 12, color: "#6b6e76" }}>Splácíš hypotéku, byt roste na hodnotě</div>
               </div>
             </div>
 
             <Slider label="Cena bytu" value={apartmentPrice} min={2_000_000} max={20_000_000} step={100_000}
-              onChange={setApartmentPrice} fmtFn={fmt} color="#92591e" />
+              onChange={setApartmentPrice} fmtFn={fmt} color="#f59e0b" />
             <Slider label="Úroková sazba hypotéky" value={mortgageRate} min={0.02} max={0.09} step={0.001}
-              onChange={setMortgageRate} fmtFn={pct} color="#a8203b"
+              onChange={setMortgageRate} fmtFn={pct} color="#fb7185"
               hint="Průměr ČR 2026: ~5,2 %." />
             <Slider label="Splatnost hypotéky (let)" value={mortgageYears} min={5} max={30} step={1}
-              onChange={setMortgageYears} fmtFn={(v) => `${v} let`} color="#92591e" />
+              onChange={setMortgageYears} fmtFn={(v) => `${v} let`} color="#f59e0b" />
             <Slider label="Fixace (let)" value={fixationYears} min={1} max={10} step={1}
-              onChange={setFixationYears} fmtFn={(v) => `${v} let`} color="#92591e" />
+              onChange={setFixationYears} fmtFn={(v) => `${v} let`} color="#f59e0b" />
             <Slider label="Posun sazby při refixaci" value={refixRateDrift} min={-0.02} max={0.03} step={0.0025}
-              onChange={setRefixRateDrift} fmtFn={(v) => `${v >= 0 ? "+" : ""}${(v * 100).toFixed(2)} pb`} color="#a8203b"
+              onChange={setRefixRateDrift} fmtFn={(v) => `${v >= 0 ? "+" : ""}${(v * 100).toFixed(2)} pb`} color="#fb7185"
               hint="O kolik se sazba změní při každé refixaci." />
             <Slider label="Roční zhodnocení nemovitosti" value={appreciation} min={0} max={0.1} step={0.005}
-              onChange={setAppreciation} fmtFn={pct} color="#086d3e"
+              onChange={setAppreciation} fmtFn={pct} color="#5eead4"
               hint="Praha dlouhodobě ~5 % nom." />
             <Slider label="Údržba a fond oprav / rok" value={propertyMaintenancePct} min={0} max={0.03} step={0.001}
-              onChange={setPropertyMaintenancePct} fmtFn={pct} color="#525252"
+              onChange={setPropertyMaintenancePct} fmtFn={pct} color="#94a3b8"
               hint="Fond oprav v ČR cca 0,3–0,6 % ročně z hodnoty." />
             <Slider label="Daň z nemovitosti / rok" value={propertyTaxYearly} min={0} max={20_000} step={500}
-              onChange={setPropertyTaxYearly} fmtFn={fmt} color="#525252" />
+              onChange={setPropertyTaxYearly} fmtFn={fmt} color="#94a3b8" />
 
             <div style={{
               marginTop: 14, padding: "12px 16px",
-              background: "#fdf5ea", borderRadius: 12,
+              background: "rgba(245,158,11,0.08)", borderRadius: 12,
               fontFamily: "'IBM Plex Mono', monospace", fontSize: 13,
             }}>
               <Row label="Měsíční splátka (start)" value={fmt(initialMortgagePayment)} />
               <Row label="Měsíční výdaj vč. údržby" value={fmt(monthlyApt)} />
-              <Row label={`Vlastní jmění za ${years} let`} value={fmt(finalApt)} valueColor="#92591e" />
+              <Row label={`Vlastní jmění za ${years} let`} value={fmt(finalApt)} valueColor="#f59e0b" />
               <Row label="Hodnota bytu" value={fmt(result.finalAptValue)} />
-              <Row label="Zbývající dluh" value={fmt(result.finalLoan)} valueColor="#a8203b" />
-              <Row label="Celkem zaplacené úroky" value={fmt(result.totalInterestPaid)} valueColor="#a8203b" />
+              <Row label="Zbývající dluh" value={fmt(result.finalLoan)} valueColor="#fb7185" />
+              <Row label="Celkem zaplacené úroky" value={fmt(result.totalInterestPaid)} valueColor="#fb7185" />
             </div>
           </Card>
         </div>
 
         {/* společné předpoklady */}
-        <Card style={{ marginBottom: 24 }} accent="#4c3a8a">
-          <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 15, marginBottom: 14, color: "#4c3a8a" }}>
+        <Card style={{ marginBottom: 24 }} accent="#a78bfa">
+          <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 15, marginBottom: 14, color: "#a78bfa" }}>
             Společné makro-předpoklady
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: 12 }}>
             <Slider label="Inflace / rok" value={inflation} min={0} max={0.08} step={0.0025}
-              onChange={setInflation} fmtFn={pct} color="#4c3a8a"
+              onChange={setInflation} fmtFn={pct} color="#a78bfa"
               hint="Cíl ČNB 2 %. Realita 2014–2025 průměr ~3,5 %." />
           </div>
         </Card>
@@ -446,18 +446,18 @@ export default function App() {
         {/* hlavní graf */}
         <Card style={{ marginBottom: 24 }}>
           <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 18, marginBottom: 20 }}>
-            Vývoj vlastního jmění <span style={{ color: "#4c3a8a", fontSize: 14, fontWeight: 500 }}>(reálné hodnoty, dnešní Kč)</span>
+            Vývoj vlastního jmění <span style={{ color: "#a78bfa", fontSize: 14, fontWeight: 500 }}>(reálné hodnoty, dnešní Kč)</span>
           </div>
           <ResponsiveContainer width="100%" height={360}>
             <LineChart data={chartData}>
-              <CartesianGrid stroke="#dde3eb" />
-              <XAxis dataKey="year" tick={{ fill: "#8a8a8a", fontSize: 12 }} tickFormatter={(v) => `${v}`} />
-              <YAxis tick={{ fill: "#8a8a8a", fontSize: 12 }} tickFormatter={(v) => `${(v / 1e6).toFixed(1)}M`} />
+              <CartesianGrid stroke="#2a2f3a" />
+              <XAxis dataKey="year" tick={{ fill: "#6b6e76", fontSize: 12 }} tickFormatter={(v) => `${v}`} />
+              <YAxis tick={{ fill: "#6b6e76", fontSize: 12 }} tickFormatter={(v) => `${(v / 1e6).toFixed(1)}M`} />
               <Tooltip content={<CustomTooltip />} />
               <Legend wrapperStyle={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: 13 }} />
-              <Line type="monotone" dataKey="Akcie" stroke="#0c4a6e" strokeWidth={3}
+              <Line type="monotone" dataKey="Akcie" stroke="#10b981" strokeWidth={3}
                 dot={false} activeDot={{ r: 6 }} />
-              <Line type="monotone" dataKey="Byt (vlastní jmění)" stroke="#92591e" strokeWidth={3}
+              <Line type="monotone" dataKey="Byt (vlastní jmění)" stroke="#f59e0b" strokeWidth={3}
                 dot={false} activeDot={{ r: 6 }} strokeDasharray="6 3" />
             </LineChart>
           </ResponsiveContainer>
@@ -469,18 +469,18 @@ export default function App() {
             Co je „do dýmu" za {years} {years === 1 ? "rok" : "let"}
           </div>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 16 }}>
-            <Stat icon="📭" label="Zaplacený nájem" value={fmt(result.totalRentPaid)} color="#a8203b" />
-            <Stat icon="🏦" label="Úroky hypotéky" value={fmt(result.totalInterestPaid)} color="#a8203b" />
-            <Stat icon="🔧" label="Údržba bytu" value={fmt(result.totalMaintenancePaid)} color="#525252" />
-            <Stat icon="📋" label="Daň z nemovitosti" value={fmt(result.totalPropertyTaxPaid)} color="#525252" />
+            <Stat icon="📭" label="Zaplacený nájem" value={fmt(result.totalRentPaid)} color="#fb7185" />
+            <Stat icon="🏦" label="Úroky hypotéky" value={fmt(result.totalInterestPaid)} color="#fb7185" />
+            <Stat icon="🔧" label="Údržba bytu" value={fmt(result.totalMaintenancePaid)} color="#94a3b8" />
+            <Stat icon="📋" label="Daň z nemovitosti" value={fmt(result.totalPropertyTaxPaid)} color="#94a3b8" />
           </div>
           <div style={{
             marginTop: 18, padding: "14px 18px",
-            background: "#f5f7fa", borderRadius: 4, border: "1px solid #dde3eb", fontSize: 13, color: "#5a5a5a", lineHeight: 1.7
+            background: "#0e1015", borderRadius: 4, border: "1px solid #2a2f3a", fontSize: 13, color: "#8b8d96", lineHeight: 1.7
           }}>
-            💡 V akciovém scénáři jde do dýmu jen <strong style={{ color: "#a8203b" }}>nájem</strong>.
-            V bytovém scénáři jdou do dýmu <strong style={{ color: "#a8203b" }}>úroky + údržba + daň</strong>
-            {" "}— celkem <strong style={{ color: "#0f1419" }}>
+            💡 V akciovém scénáři jde do dýmu jen <strong style={{ color: "#fb7185" }}>nájem</strong>.
+            V bytovém scénáři jdou do dýmu <strong style={{ color: "#fb7185" }}>úroky + údržba + daň</strong>
+            {" "}— celkem <strong style={{ color: "#e8e8ea" }}>
               {fmt(result.totalInterestPaid + result.totalMaintenancePaid + result.totalPropertyTaxPaid)}
             </strong>.
           </div>
@@ -494,28 +494,28 @@ export default function App() {
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
             <div style={{
               padding: 16, borderRadius: 12,
-              background: stockTaxFree ? "#edf7f1" : "#fbeef0",
-              border: `1px solid ${stockTaxFree ? "#086d3e" : "#a8203b"}`,
+              background: stockTaxFree ? "rgba(94,234,212,0.1)" : "rgba(251,113,133,0.1)",
+              border: `1px solid ${stockTaxFree ? "#5eead4" : "#fb7185"}`,
             }}>
-              <div style={{ fontSize: 13, color: "#5a5a5a", marginBottom: 6 }}>Akcie</div>
-              <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 18, color: stockTaxFree ? "#086d3e" : "#a8203b" }}>
+              <div style={{ fontSize: 13, color: "#8b8d96", marginBottom: 6 }}>Akcie</div>
+              <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 18, color: stockTaxFree ? "#5eead4" : "#fb7185" }}>
                 {stockTaxFree ? "0 % daň" : "15 % daň ze zisku"}
               </div>
-              <div style={{ fontSize: 12, color: "#8a8a8a", marginTop: 6, lineHeight: 1.5 }}>
+              <div style={{ fontSize: 12, color: "#6b6e76", marginTop: 6, lineHeight: 1.5 }}>
                 Časový test 3 roky držby → osvobozeno.
                 {!stockTaxFree && ` Tvůj horizont ${years} let < 3 roky.`}
               </div>
             </div>
             <div style={{
               padding: 16, borderRadius: 12,
-              background: aptTaxFree ? "#edf7f1" : "#fbeef0",
-              border: `1px solid ${aptTaxFree ? "#086d3e" : "#a8203b"}`,
+              background: aptTaxFree ? "rgba(94,234,212,0.1)" : "rgba(251,113,133,0.1)",
+              border: `1px solid ${aptTaxFree ? "#5eead4" : "#fb7185"}`,
             }}>
-              <div style={{ fontSize: 13, color: "#5a5a5a", marginBottom: 6 }}>Byt</div>
-              <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 18, color: aptTaxFree ? "#086d3e" : "#a8203b" }}>
+              <div style={{ fontSize: 13, color: "#8b8d96", marginBottom: 6 }}>Byt</div>
+              <div style={{ fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, fontSize: 18, color: aptTaxFree ? "#5eead4" : "#fb7185" }}>
                 {aptTaxFree ? "0 % daň (primární bydlení)" : "15 % daň při prodeji"}
               </div>
-              <div style={{ fontSize: 12, color: "#8a8a8a", marginTop: 6, lineHeight: 1.5 }}>
+              <div style={{ fontSize: 12, color: "#6b6e76", marginTop: 6, lineHeight: 1.5 }}>
                 Časový test 5 let u vlastního bydlení, 10 let u investičního (po 2021).
               </div>
             </div>
@@ -535,22 +535,22 @@ export default function App() {
                     <th key={h} style={{
                       textAlign: i === 0 ? "left" : "right",
                       padding: "0 8px 10px",
-                      color: "#8a8a8a", fontWeight: 500,
-                      borderBottom: "2px solid #0f1419"
+                      color: "#6b6e76", fontWeight: 500,
+                      borderBottom: "2px solid #e8e8ea"
                     }}>{h}</th>
                   ))}
                 </tr>
               </thead>
               <tbody>
                 {result.yearly.slice(1).filter((d) => years <= 15 || d.year % 2 === 0 || d.year === years).map((d) => (
-                  <tr key={d.year} style={{ borderBottom: "1px solid #e5eaf0" }}>
-                    <td style={{ padding: "8px", color: "#5a5a5a" }}>{d.year}</td>
-                    <td style={{ textAlign: "right", padding: "8px", color: "#0c4a6e", fontWeight: 600 }}>{fmt(d.stock)}</td>
-                    <td style={{ textAlign: "right", padding: "8px", color: "#92591e", fontWeight: 600 }}>{fmt(d.aptEquity)}</td>
-                    <td style={{ textAlign: "right", padding: "8px", color: "#5a5a5a" }}>{fmt(d.aptValue)}</td>
-                    <td style={{ textAlign: "right", padding: "8px", color: "#a8203b" }}>{fmt(d.loanBalance)}</td>
-                    <td style={{ textAlign: "right", padding: "8px", color: "#5a5a5a" }}>{fmt(d.mortgagePayment)}</td>
-                    <td style={{ textAlign: "right", padding: "8px", color: "#5a5a5a" }}>{fmt(d.rent)}</td>
+                  <tr key={d.year} style={{ borderBottom: "1px solid #222630" }}>
+                    <td style={{ padding: "8px", color: "#8b8d96" }}>{d.year}</td>
+                    <td style={{ textAlign: "right", padding: "8px", color: "#10b981", fontWeight: 600 }}>{fmt(d.stock)}</td>
+                    <td style={{ textAlign: "right", padding: "8px", color: "#f59e0b", fontWeight: 600 }}>{fmt(d.aptEquity)}</td>
+                    <td style={{ textAlign: "right", padding: "8px", color: "#8b8d96" }}>{fmt(d.aptValue)}</td>
+                    <td style={{ textAlign: "right", padding: "8px", color: "#fb7185" }}>{fmt(d.loanBalance)}</td>
+                    <td style={{ textAlign: "right", padding: "8px", color: "#8b8d96" }}>{fmt(d.mortgagePayment)}</td>
+                    <td style={{ textAlign: "right", padding: "8px", color: "#8b8d96" }}>{fmt(d.rent)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -564,18 +564,18 @@ export default function App() {
           gap: 16, marginBottom: 16
         }}>
           {[
-            { icon: "⚡", title: "Likvidita", text: "Akcie prodáš za 1 den. Byt 3–6 měsíců + provize realitce 3–5 %.", color: "#0c4a6e" },
-            { icon: "🛡", title: "Jistota bydlení", text: "Vlastní byt = konec rizika výpovědi, růstu nájmu nebo špatného pronajímatele.", color: "#92591e" },
-            { icon: "📉", title: "Volatilita", text: "Akcie mohou v krizi spadnout o 30–50 %. Byt je stabilnější, ale méně roste.", color: "#a8203b" },
-            { icon: "🔧", title: "Skryté náklady bytu", text: "Údržba, fond oprav, daň, pojištění, opravy. Reálně 1–1,5 % z hodnoty bytu ročně.", color: "#525252" },
-            { icon: "🎯", title: "Páka", text: "Hypotéka = páka. Investuješ celý byt z 10–20 % vlastních. To u akcií standardně neuděláš.", color: "#4c3a8a" },
-            { icon: "📊", title: "Diverzifikace", text: "Akcie = stovky firem napříč světem. Byt = jedna nemovitost na jednom místě.", color: "#086d3e" },
+            { icon: "⚡", title: "Likvidita", text: "Akcie prodáš za 1 den. Byt 3–6 měsíců + provize realitce 3–5 %.", color: "#10b981" },
+            { icon: "🛡", title: "Jistota bydlení", text: "Vlastní byt = konec rizika výpovědi, růstu nájmu nebo špatného pronajímatele.", color: "#f59e0b" },
+            { icon: "📉", title: "Volatilita", text: "Akcie mohou v krizi spadnout o 30–50 %. Byt je stabilnější, ale méně roste.", color: "#fb7185" },
+            { icon: "🔧", title: "Skryté náklady bytu", text: "Údržba, fond oprav, daň, pojištění, opravy. Reálně 1–1,5 % z hodnoty bytu ročně.", color: "#94a3b8" },
+            { icon: "🎯", title: "Páka", text: "Hypotéka = páka. Investuješ celý byt z 10–20 % vlastních. To u akcií standardně neuděláš.", color: "#a78bfa" },
+            { icon: "📊", title: "Diverzifikace", text: "Akcie = stovky firem napříč světem. Byt = jedna nemovitost na jednom místě.", color: "#5eead4" },
           ].map((item) => (
             <div key={item.title} style={{
-              background: "#ffffff",
-              border: "1px solid #dde3eb",
+              background: "#181b22",
+              border: "1px solid #2a2f3a",
               borderRadius: 4, padding: 18,
-              boxShadow: "0 1px 2px rgba(15,20,25,0.04)",
+              boxShadow: "0 1px 2px rgba(0,0,0,0.3)",
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
                 <span style={{ fontSize: 20 }}>{item.icon}</span>
@@ -583,12 +583,12 @@ export default function App() {
                   {item.title}
                 </span>
               </div>
-              <p style={{ fontSize: 12.5, color: "#5a5a5a", lineHeight: 1.55, margin: 0 }}>{item.text}</p>
+              <p style={{ fontSize: 12.5, color: "#8b8d96", lineHeight: 1.55, margin: 0 }}>{item.text}</p>
             </div>
           ))}
         </div>
 
-        <div style={{ textAlign: "center", padding: "16px 0 4px", fontSize: 11, color: "#737373", lineHeight: 1.6 }}>
+        <div style={{ textAlign: "center", padding: "16px 0 4px", fontSize: 11, color: "#4a4d55", lineHeight: 1.6 }}>
           Kalkulace je ilustrativní. Výnosy v minulosti nezaručují budoucí výsledky.
           <br />
           Defaultní hodnoty vycházejí z dat ČR 2014–2026 (ČSÚ, ČNB, Hypoindex, MSCI World v CZK).
@@ -600,15 +600,15 @@ export default function App() {
 
 const Row = ({ label, value, valueColor }) => (
   <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-    <span style={{ color: "#5a5a5a" }}>{label}</span>
-    <span style={{ color: valueColor || "#0f1419", fontWeight: 700 }}>{value}</span>
+    <span style={{ color: "#8b8d96" }}>{label}</span>
+    <span style={{ color: valueColor || "#e8e8ea", fontWeight: 700 }}>{value}</span>
   </div>
 );
 
 const Stat = ({ icon, label, value, color }) => (
   <div>
-    <div style={{ fontSize: 13, color: "#5a5a5a", marginBottom: 6 }}>{icon} {label}</div>
-    <div style={{ fontSize: 20, fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, color: color || "#0f1419" }}>
+    <div style={{ fontSize: 13, color: "#8b8d96", marginBottom: 6 }}>{icon} {label}</div>
+    <div style={{ fontSize: 20, fontFamily: "'Source Serif 4', Georgia, serif", fontWeight: 700, color: color || "#e8e8ea" }}>
       {value}
     </div>
   </div>
