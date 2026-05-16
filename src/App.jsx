@@ -147,7 +147,7 @@ function simulate({
 }
 
 // ─── UI helpers ──────────────────────────────────────────────────────────
-const Slider = ({ label, value, min, max, step, onChange, fmt: fmtFn, color, hint }) => (
+const Slider = ({ label, value, min, max, step, onChange, fmtFn, color, hint }) => (
   <div style={{ marginBottom: 18 }}>
     <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
       <span style={{ color: "#9ca3af", fontSize: 13, fontFamily: "'DM Mono', monospace" }}>{label}</span>
