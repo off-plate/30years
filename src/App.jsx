@@ -181,7 +181,7 @@ const CustomTooltip = ({ active, payload, label }) => {
   return (
     <div style={{
       background: "#ffffff",
-      border: "1px solid #d4cfc0",
+      border: "1px solid #c4ccd6",
       borderRadius: 4,
       padding: "12px 18px",
       fontFamily: "'IBM Plex Mono', monospace",
@@ -200,8 +200,8 @@ const CustomTooltip = ({ active, payload, label }) => {
 const Card = ({ children, accent, style }) => (
   <div style={{
     background: "#ffffff",
-    border: "1px solid #e8e2d4",
-    borderTop: accent ? `3px solid ${accent}` : "1px solid #e8e2d4",
+    border: "1px solid #dde3eb",
+    borderTop: accent ? `3px solid ${accent}` : "1px solid #dde3eb",
     borderRadius: 4,
     padding: 24,
     boxShadow: "0 1px 2px rgba(15,20,25,0.04)",
@@ -270,7 +270,7 @@ export default function App() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "#faf8f3",
+      background: "#f5f7fa",
       fontFamily: "'Inter', sans-serif",
       color: "#0f1419",
       padding: "32px 20px",
@@ -286,7 +286,7 @@ export default function App() {
         <div style={{
           display: "inline-block",
           background: "transparent",
-          border: "1px solid #d4cfc0",
+          border: "1px solid #c4ccd6",
           borderRadius: 2,
           padding: "4px 14px",
           fontSize: 11,
@@ -321,9 +321,9 @@ export default function App() {
 
         {/* winner banner */}
         <div style={{
-          background: winner === "akcie" ? "#f0f4f8" : "#faf4ec",
+          background: winner === "akcie" ? "#f0f4f8" : "#fdf5ea",
           borderLeft: `4px solid ${winner === "akcie" ? "#0c4a6e" : "#92591e"}`,
-          border: "1px solid #e8e2d4",
+          border: "1px solid #dde3eb",
           borderLeftWidth: 4,
           borderLeftColor: winner === "akcie" ? "#0c4a6e" : "#92591e",
           borderRadius: 4,
@@ -418,7 +418,7 @@ export default function App() {
 
             <div style={{
               marginTop: 14, padding: "12px 16px",
-              background: "#faf4ec", borderRadius: 12,
+              background: "#fdf5ea", borderRadius: 12,
               fontFamily: "'IBM Plex Mono', monospace", fontSize: 13,
             }}>
               <Row label="Měsíční splátka (start)" value={fmt(initialMortgagePayment)} />
@@ -450,7 +450,7 @@ export default function App() {
           </div>
           <ResponsiveContainer width="100%" height={360}>
             <LineChart data={chartData}>
-              <CartesianGrid stroke="#e8e2d4" />
+              <CartesianGrid stroke="#dde3eb" />
               <XAxis dataKey="year" tick={{ fill: "#8a8a8a", fontSize: 12 }} tickFormatter={(v) => `${v}`} />
               <YAxis tick={{ fill: "#8a8a8a", fontSize: 12 }} tickFormatter={(v) => `${(v / 1e6).toFixed(1)}M`} />
               <Tooltip content={<CustomTooltip />} />
@@ -476,7 +476,7 @@ export default function App() {
           </div>
           <div style={{
             marginTop: 18, padding: "14px 18px",
-            background: "#faf8f3", borderRadius: 4, border: "1px solid #e8e2d4", fontSize: 13, color: "#5a5a5a", lineHeight: 1.7
+            background: "#f5f7fa", borderRadius: 4, border: "1px solid #dde3eb", fontSize: 13, color: "#5a5a5a", lineHeight: 1.7
           }}>
             💡 V akciovém scénáři jde do dýmu jen <strong style={{ color: "#a8203b" }}>nájem</strong>.
             V bytovém scénáři jdou do dýmu <strong style={{ color: "#a8203b" }}>úroky + údržba + daň</strong>
@@ -543,7 +543,7 @@ export default function App() {
               </thead>
               <tbody>
                 {result.yearly.slice(1).filter((d) => years <= 15 || d.year % 2 === 0 || d.year === years).map((d) => (
-                  <tr key={d.year} style={{ borderBottom: "1px solid #ece8db" }}>
+                  <tr key={d.year} style={{ borderBottom: "1px solid #e5eaf0" }}>
                     <td style={{ padding: "8px", color: "#5a5a5a" }}>{d.year}</td>
                     <td style={{ textAlign: "right", padding: "8px", color: "#0c4a6e", fontWeight: 600 }}>{fmt(d.stock)}</td>
                     <td style={{ textAlign: "right", padding: "8px", color: "#92591e", fontWeight: 600 }}>{fmt(d.aptEquity)}</td>
@@ -573,7 +573,7 @@ export default function App() {
           ].map((item) => (
             <div key={item.title} style={{
               background: "#ffffff",
-              border: "1px solid #e8e2d4",
+              border: "1px solid #dde3eb",
               borderRadius: 4, padding: 18,
               boxShadow: "0 1px 2px rgba(15,20,25,0.04)",
             }}>
@@ -588,7 +588,7 @@ export default function App() {
           ))}
         </div>
 
-        <div style={{ textAlign: "center", padding: "16px 0 4px", fontSize: 11, color: "#a8a8a8", lineHeight: 1.6 }}>
+        <div style={{ textAlign: "center", padding: "16px 0 4px", fontSize: 11, color: "#737373", lineHeight: 1.6 }}>
           Kalkulace je ilustrativní. Výnosy v minulosti nezaručují budoucí výsledky.
           <br />
           Defaultní hodnoty vycházejí z dat ČR 2014–2026 (ČSÚ, ČNB, Hypoindex, MSCI World v CZK).
