@@ -64,6 +64,11 @@ function simulate({
   let totalMaintenancePaid = 0;
   let totalPropertyTaxPaid = 0;
   let totalStockContrib = initialCapital;
+  // reálné (deflované) varianty
+  let totalRentPaidReal = 0;
+  let totalInterestPaidReal = 0;
+  let totalMaintenancePaidReal = 0;
+  let totalPropertyTaxPaidReal = 0;
 
   const yearly = [{
     year: 0,
@@ -80,10 +85,13 @@ function simulate({
   }];
 
   for (let m = 1; m <= months; m++) {
+    const realDeflator = Math.pow(1 + inflation, m / 12);
+
     // — akcie
     stockBalance = stockBalance * (1 + r) + currentMonthlyAdd;
     totalStockContrib += currentMonthlyAdd;
     totalRentPaid += currentRent;
+    totalRentPaidReal += currentRent / realDeflator;
 
     // — byt
     const interest = loanBalance * (currentMortgageRate / 12);
@@ -91,6 +99,7 @@ function simulate({
     if (principal > loanBalance) principal = loanBalance;
     loanBalance = Math.max(0, loanBalance - principal);
     totalInterestPaid += interest;
+    totalInterestPaidReal += interest / realDeflator;
 
     // růst hodnoty bytu měsíčně
     apartmentValue = apartmentValue * Math.pow(1 + appreciation, 1 / 12);
@@ -100,6 +109,8 @@ function simulate({
     const monthlyPropertyTax = propertyTaxYearly / 12;
     totalMaintenancePaid += monthlyMaintenance;
     totalPropertyTaxPaid += monthlyPropertyTax;
+    totalMaintenancePaidReal += monthlyMaintenance / realDeflator;
+    totalPropertyTaxPaidReal += monthlyPropertyTax / realDeflator;
 
     // — yearly anchor
     if (m % 12 === 0) {
@@ -132,17 +143,18 @@ function simulate({
     }
   }
 
+  const realFactorFinal = Math.pow(1 + inflation, years);
   return {
     yearly,
-    totalRentPaid,
-    totalInterestPaid,
-    totalMaintenancePaid,
-    totalPropertyTaxPaid,
+    totalRentPaid: totalRentPaidReal,
+    totalInterestPaid: totalInterestPaidReal,
+    totalMaintenancePaid: totalMaintenancePaidReal,
+    totalPropertyTaxPaid: totalPropertyTaxPaidReal,
     totalStockContrib,
-    finalStock: stockBalance,
-    finalAptEquity: apartmentValue - loanBalance,
-    finalAptValue: apartmentValue,
-    finalLoan: loanBalance,
+    finalStock: stockBalance / realFactorFinal,
+    finalAptEquity: (apartmentValue - loanBalance) / realFactorFinal,
+    finalAptValue: apartmentValue / realFactorFinal,
+    finalLoan: loanBalance / realFactorFinal,
   };
 }
 
@@ -216,7 +228,7 @@ export default function App() {
   const [fixationYears, setFixationYears] = useState(5);
   const [refixRateDrift, setRefixRateDrift] = useState(0.0); // o kolik se sazba změní
   const [appreciation, setAppreciation] = useState(0.05); // Praha dlouhodobě ~5 % nom.
-  const [propertyMaintenancePct, setPropertyMaintenancePct] = useState(0.01); // 1 % ročně z hodnoty
+  const [propertyMaintenancePct, setPropertyMaintenancePct] = useState(0.005); // ~0,5 % ročně (fond oprav ~30 Kč/m²/měs)
   const [propertyTaxYearly, setPropertyTaxYearly] = useState(3000);
 
   const result = useMemo(() => simulate({
@@ -395,7 +407,7 @@ export default function App() {
               hint="Praha dlouhodobě ~5 % nom." />
             <Slider label="Údržba a fond oprav / rok" value={propertyMaintenancePct} min={0} max={0.03} step={0.001}
               onChange={setPropertyMaintenancePct} fmtFn={pct} color="#94a3b8"
-              hint="Reálně 0,5–1,5 % z hodnoty bytu." />
+              hint="Fond oprav v ČR cca 0,3–0,6 % ročně z hodnoty." />
             <Slider label="Daň z nemovitosti / rok" value={propertyTaxYearly} min={0} max={20_000} step={500}
               onChange={setPropertyTaxYearly} fmtFn={fmt} color="#94a3b8" />
 
